@@ -18,22 +18,40 @@
 #include    <gtkmm.h>
 #include    <libxml++/libxml++.h>
 
+/*! \brief  アプリケーションメインダイアログクラス
+ *
+ * ProjectMaker のメイン画面となるダイアログクラスです。\n
+ * Taget directory や Create button 等の UI 制御を行います。\n
+ *
+ * \author  Digital Rabbit
+ * \since   2012/02/18
+ */
 class MakerDialog : public Gtk::Dialog
 {
 public:
-    MakerDialog( BaseObjectType*, const Glib::RefPtr< Gtk::Builder >& );
+    /*! \brief コンストラクタ */
+    MakerDialog( BaseObjectType* aCobject, const Glib::RefPtr< Gtk::Builder >& aRefBuilder );
+    /*! \brief デストラクタ */
     virtual ~MakerDialog();
 
 protected:
+    /*! \brief <i>&lt;Create&gt;</i> ボタンクリック */
     void onCreateClicked();
+    /*! \brief <i>&lt;Cancel&gt;</i> ボタンクリック */
     void onCancelClicked();
+    /*! \brief Target directory <i>&lt;Select...&gt;</i> ボタンクリック */
     void onSelectDirClicked();
 
 private:
+    /*! \brief GTK+ Builder */
     Glib::RefPtr< Gtk::Builder > mrBuilder;
+    /*! \brief <i>&lt;Create&gt;</i> ボタン */
     Gtk::Button* mpCreate;
+    /*! \brief <i>&lt;Cancel&gt;</i> ボタン */
     Gtk::Button* mpCancel;
+    /*! \brief Target directory <i>&lt;Select...&gt;</i> ボタン */
     Gtk::Button* mpSelected;
+    /*! \brief <i>&lt;Target directory&gt;</i> エントリー */
     Gtk::Entry* mpTargetDir;
 
 };

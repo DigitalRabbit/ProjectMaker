@@ -17,8 +17,22 @@
 #include    "MakerDialog.h"
 #include    <iostream>
 
+/*! \brief エントリポイント
+ *
+ * ProjectMaker のエントリポイントです。\n
+ * Gtk::Builder で glade ファイルからダイアログを生成、\n
+ * GTK+ を使用してメインループへダイアログを引き渡しています。
+ *
+ * \param[in]   argc    コマンドライン引数の数
+ * \param[in]   argv    コマンドライン引数配列
+ *
+ * \return      int     プログラム終了状態
+ * \retval      EXIT_SUCCESS    正常終了
+ * \retval      EXIT_FAILURE    異常終了
+ */
 int main( int argc, char* argv[] )
 {
+    // Create Main roop instance.
     Gtk::Main kit( argc, argv );
 
     // Load the Glade file and instiate its widgets:
@@ -43,10 +57,12 @@ int main( int argc, char* argv[] )
         return 1;
     }
 
+    // Create dialog.
     MakerDialog* pDialog = nullptr;
     builder->get_widget_derived( "dl_main", pDialog );
     if( pDialog != nullptr )
     {
+        // Run dialog.
         kit.run( *pDialog );
         delete pDialog;
     }

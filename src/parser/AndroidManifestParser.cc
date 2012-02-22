@@ -26,6 +26,12 @@
 namespace digirabi {
     namespace android {
 
+/*!
+ * <i>AndroidManifest.xml</i> へのファイルパスを引数とし、\n
+ * 初期段階で package, versionName, versionCode の属性値を取得します。
+ *
+ * \param[in]   aFilePath   AndroidManifest.xml への file path
+ */
 ManifestParser::ManifestParser( const Glib::ustring aFilePath )
 {
     mParser.set_substitute_entities();
@@ -67,28 +73,56 @@ ManifestParser::ManifestParser( const Glib::ustring aFilePath )
     return;
 }
 
+/*! <b>現在未使用</b> */
 ManifestParser::~ManifestParser() {}
 
+/*!
+ * <i>&lt;manifest&gt;</i> タグの <i>&lt;package&gt;</i> 属性値を返却します。
+ *
+ * \note    ここで返却される値はコンストラクタの時点で取得、メンバ変数へと設定されている値です。
+ *
+ * \return  const Glib::ustring <i>&lt;manifest&gt;</i> タグ内 <i>&lt;package&gt;</i> 属性値
+ */
 const Glib::ustring ManifestParser::getApplicationName()
 {
     return ( mAppName );
 }
 
+/*!
+ * <i>&lt;manifest&gt;</i> タグの <i>&lt;versionName&gt;</i> 属性値を返却します。
+ *
+ * \note    ここで返却される値はコンストラクタの時点で取得、メンバ変数へと設定されている値です。
+ *
+ * \return  const Glib::ustring <i>&lt;manifest&gt;</i> タグ内 <i>&lt;versionName&gt;</i> 属性値
+ */
 const Glib::ustring ManifestParser::getVersionName()
 {
     return ( mVerName );
 }
 
+/*!
+ * <i>&lt;manifest&gt;</i> タグの <i>&lt;versionCode&gt;</i> 属性値を返却します。
+ *
+ * \note    ここで返却される値はコンストラクタの時点で取得、メンバ変数へと設定されている値です。
+ *
+ * \return  const Glib::ustring <i>&lt;manifest&gt;</i> タグ内 <i>&lt;versionCode&gt;</i> 属性値
+ */
 const Glib::ustring ManifestParser::getVersionCode()
 {
     return ( mVerCode );
 }
 
+/*!
+ * 読み込んだ XML のルートノードを返却します。
+ *
+ * \return  const xmlpp::Node*  読み込んだ XML のルートノードインスタンスポインタ
+ */
 const xmlpp::Node* ManifestParser::getRootNode()
 {
     return ( mParser.get_document()->get_root_node() ); // deleted by DomParser.
 }
 
+/*! <b><i>参考用</i></b> */
 void ManifestParser::print_node( const xmlpp::Node* node, unsigned int indentation )
 {
 
@@ -175,6 +209,7 @@ void ManifestParser::print_node( const xmlpp::Node* node, unsigned int indentati
     }
 }
 
+/*! <b><i>参考用</i></b> */
 void ManifestParser::print_indentation(unsigned int indentation)
 {
     for(unsigned int i = 0; i < indentation; ++i)

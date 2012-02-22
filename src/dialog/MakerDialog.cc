@@ -18,33 +18,52 @@
 #include    "AndroidManifestParser.h"
 #include    <iostream>
 
-MakerDialog::MakerDialog( BaseObjectType* cobject, const Glib::RefPtr< Gtk::Builder >& refBuilder )
-        : Gtk::Dialog( cobject ), mrBuilder( refBuilder ), mpCreate( nullptr ), mpCancel( nullptr ), mpSelected( nullptr ), mpTargetDir( nullptr )
+/*!
+ * 各種 Widget instance を取得し、コールバック関数の登録を行っています。
+ * 取得する Instance と 設定するコールバック関数は以下の通りです。
+ * <table>
+ *  <tr>               <th>Instance</th>    <th>Widget name</th>   <th>Menber</th> <th>Callback function</th>  </tr>
+ *  <tr align="center"><td>Gtk::Button</td> <td>bt_create</td>     <td>yes</td>    <td>onCreateClicked</td>    </tr>
+ *  <tr align="center"><td>Gtk::Button</td> <td>bt_cancel</td>     <td>yes</td>    <td>onCancelClicked</td>    </tr>
+ *  <tr align="center"><td>Gtk::Button</td> <td>bt_select_dir</td> <td>yes</td>    <td>onSelectDirClicked</td> </tr>
+ *  <tr align="center"><td>Gtk::Entry</td>  <td>et_target_dir</td> <td>yes</td>    <td align="center">-</td>   </tr>
+ * </table>
+ *
+ * \param[in]   aCoject      基底クラス引渡し用 Object instance
+ * \param[in]   aRefBuilder  GTK Builder instance
+ */
+MakerDialog::MakerDialog( BaseObjectType* aCobject, const Glib::RefPtr< Gtk::Builder >& aRefBuilder )
+        : Gtk::Dialog( aCobject ), mrBuilder( aRefBuilder ), mpCreate( nullptr ), mpCancel( nullptr ), mpSelected( nullptr ), mpTargetDir( nullptr )
 {
-    //Get the Glade-instantiated Button, and connect a signal handler:
+    // Get the Glade-instantiated Button, and connect a signal handler:
+    // Create ボタン
     mrBuilder->get_widget( "bt_create", mpCreate );
     if( mpCreate != nullptr )
         mpCreate->signal_clicked().connect( sigc::mem_fun( *this, &MakerDialog::onCreateClicked ) );
 
+    // Cancel ボタン
     mrBuilder->get_widget( "bt_cancel", mpCancel );
     if( mpCancel != nullptr )
         mpCancel->signal_clicked().connect( sigc::mem_fun( *this, &MakerDialog::onCancelClicked ) );
 
+    // Select... ボタン
     mrBuilder->get_widget( "bt_select_dir", mpSelected );
     if( mpSelected != nullptr )
         mpSelected->signal_clicked().connect( sigc::mem_fun( *this, &MakerDialog::onSelectDirClicked ) );
 
+    // Target direcotry エントリ
     mrBuilder->get_widget( "et_target_dir", mpTargetDir );
 
     return;
 }
 
-MakerDialog::~MakerDialog()
-{
-}
+/*! <b>現在未使用</b> */
+MakerDialog::~MakerDialog() {}
 
 /*!
- * Create Button Click.
+ * <i>&lt;Create&gt;</i> ボタンクリック時のコールバック関数です。\n
+ * 現在は <i>&lt;Android&gt;</i> タブ内のラベルへ package, versionName, versionCode を表示していますが、\n
+ * 将来的にはリリース物一式を作成するボタンとなる予定です。
  */
 void MakerDialog::onCreateClicked()
 {
@@ -82,6 +101,10 @@ void MakerDialog::onCreateClicked()
     return;
 }
 
+/*!
+ * <i>&lt;Cancel&gt;</i> ボタンクリック時のコールバック関数です。\n
+ * アプリケーションを終了します。
+ */
 void MakerDialog::onCancelClicked()
 {
     // hide() will cause main::run() to end.
@@ -89,6 +112,11 @@ void MakerDialog::onCancelClicked()
     return;
 }
 
+/*!
+ * <i>&lt;Select...&gt;</i> ボタンクリック時のコールバック関数です。\n
+ * フォルダ選択ダイアログをモーダルで起動し、\n
+ * 選択されたフォルダパスを Target directory エントリーへ設定します。
+ */
 void MakerDialog::onSelectDirClicked()
 {
     Gtk::FileChooserDialog dialog( "フォルダ選択", Gtk::FILE_CHOOSER_ACTION_SELECT_FOLDER );
