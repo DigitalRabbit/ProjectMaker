@@ -1,0 +1,181 @@
+/*! \mainpage
+
+<div class="opening">
+    Android, GTK+/Glade 用の Project 生成/管理のサポートを目的としたアプリケーションです。<br />
+    まだ開発途中のため、 Android Project の生成/管理が出来ることを第一目標としています。<br />
+    <br />
+    このメインページに記載されている内容は以下の通りです。<br />
+</div>
+<div class="title_link">
+    <a href="#feature">主要機能</a><br />
+    <a href="#coding">コーディング規約</a><br />
+</div>
+<h1><a name="feature">主要機能</a></h1>
+<p>
+    主要な機能は以下の通りです。( リンククリックで説明へ移動 )
+    <ul>
+        <li><a href="#manifest_view">Manifest ファイル閲覧</a></li>
+    </ul>
+</p>
+
+<h2><a name="manifest_view">Manifest ファイル閲覧</a></h2>
+<h3>機能内容</h3>
+<p>
+    AndroidManifest.xml の中身を parse し、内容を表示します。<br />
+    現段階では <i>&lt;manifest&gt;</i>属性内の、以下の内容を表示します。<br />
+    <ul>
+        <li>package</li>
+        <li>versionName</li>
+        <li>versionCode</li>
+    </ul>
+</p>
+
+<h1><a name="coding">コーディング規約</a></h1>
+<p>
+このドキュメントは主に開発時に参照されるものですので、以降にこのアプリケーション( C++ )を対象としたコーディング規約を記載します。
+</p>
+<h2>各種メンバ( Variable / Function )名の命名規則について</h2>
+<h3>クラス</h3>
+<p>
+    クラスのメンバはすべて大文字から始めます( アッパーキャメル )。<br />
+    Intrface クラスに関しては、prefixとして<i>"I"</i>( 英大文字のアイ )を付け、その後、名称を大文字から始めます。<br />
+    <a name="class_example"><i>Example</i> :</a>
+
+<pre style="border: 1px solid #808080; padding: 3px; background: #EEEEEE;">
+class ExampleClass : public IExampleInterface
+{
+    public void onClick()
+    {
+        return;
+    }
+}
+</pre>
+
+</p>
+<h3>メンバ変数</h3>
+<p>
+    メンバ変数は、以下の規則にしたがって命名されます。
+    <ul>
+        <li>通常変数は prefix に<i>"m"</i>を付け、その後大文字から始める。( prefix は小文字、名称はアッパーキャメル )
+
+<pre style="border: 1px solid #808080; padding: 3px; background: #EEEEEE;">
+int mValiable = 100;
+</pre>
+
+        </li>
+        <li>static 変数は prefix に<i>"s"</i>を付け、その後大文字から始める。( prefix は小文字、名称はアッパーキャメル )
+
+<pre style="border: 1px solid #808080; padding: 3px; background: #EEEEEE;">
+static int sStaticVal = 3;
+</pre>
+
+        </li>
+        <li>定数は<b>すべて大文字</b>とする。
+
+<pre style="border: 1px solid #808080; padding: 3px; background: #EEEEEE;">
+static const int DEFINE_VALIABLE = 3;
+</pre>
+
+        </li>
+    </ul>
+</p>
+<h3>関数</h3>
+<p>
+    関数は先頭小文字、以降の意味区切りは大文字のローワーキャメル方式で命名されます。<br />
+    この規則は、メンバ / グローバル問わず有効です。<br />
+    また、メソッド引数は prefix に<i>"a"</i>を付け、その後大文字から始めます。( prefix は小文字、名称はアッパーキャメル )<br />
+    <br />
+    <a name="func_example"><i>Example</i> :</a>
+
+<pre style="border: 1px solid #808080; padding: 3px; background: #EEEEEE;">
+    void setNumber( int aNumber )
+    {
+        vector&lt;int&gt; array;
+        try
+        {
+            mNumber = aNumber;
+            array.push_back( aNumber );
+        }
+        catch( const std::exception& ex )
+        {
+            Log.e( TAGS, Log.printStackTrace( ex ) );
+        }
+    }
+</pre>
+
+</p>
+<h2>ソースの整形について</h2>
+<h3>演算子</h3>
+<p>
+    演算子の両端には半角スペースが入ります。<br />
+    ただし、以下の場合には、スペースが入らない場合があります。
+    <ul>
+        <li>単項演算子
+
+<pre style="border: 1px solid #808080; padding: 3px; background: #EEEEEE;">
+++a; a++; !a; ~a;
+</pre>
+
+        </li>
+    </ul>
+    <i>Example</i> :
+
+<pre style="border: 1px solid #808080; padding: 3px; background: #EEEEEE;">
+    bool setValue( int aCount, int aNum )
+    {
+        bool ret = true;
+        int a = ++aCount + aNum;
+        if( a &lt; 0 &amp;&amp; aNum !== 0 )
+        {
+            result = false;
+        }
+        return ( result );
+    }
+</pre>
+
+</p>
+<h3>小括弧 - <i>()</i></h3>
+<p>
+    小括弧の左右内側には半角スペース1つが入ります。<br />
+    ただし、中身の無い括弧の場合には、スペースは入りません。<br />
+    また、括弧同士が隣り合う場合にもスペースは入れません。<br />
+    <br />
+    <i>Examples</i> :
+
+<pre style="border: 1px solid #808080; padding: 3px; background: #EEEEEE;">
+    void setNumber( int aNumber )
+</pre>
+<pre style="border: 1px solid #808080; padding: 3px; background: #EEEEEE;">
+    int getNumber()
+</pre>
+<pre style="border: 1px solid #808080; padding: 3px; background: #EEEEEE;">
+    clazz-&gt;setNumber( 100 );
+    num = clazz-&gt;getNumber();
+</pre>
+<pre style="border: 1px solid #808080; padding: 3px; background: #EEEEEE;">
+    float a = 1.0F, b = 3.0F
+    int num = ( int )( b - a );
+</pre>
+
+</p>
+<h3>ブロック用括弧 - <i>{}</i></h3>
+<p>
+    中括弧は改行し、前行と同じインデントで扱います。<br />
+    また、閉じ括弧は開き括弧と同じインデントとします。<br />
+    中括弧のある行には基本インデント用のタブ、空白以外は記述されません。<br />
+    <br />
+    <i>Example</i> :<br />
+    <a href="#func_example">メソッド命名規則の用例を参照</a>
+</p>
+
+<h3>Template 用括弧 - <i>&lt;&gt;</i></h3>
+<p>
+    Template 用として使用される括弧は変数名と同じインデントで扱い、<br />
+    内部に空白は入れません。<br />
+    <br />
+    <i>Example</i> :<br />
+    <a href="#func_example">メソッド命名規則の用例を参照</a>
+</p>
+
+ */
+
