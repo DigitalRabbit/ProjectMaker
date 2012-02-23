@@ -39,8 +39,8 @@ protected:
     void onCreateClicked();
     /*! \brief <i>&lt;Cancel&gt;</i> ボタンクリック */
     void onCancelClicked();
-    /*! \brief Target directory <i>&lt;Select...&gt;</i> ボタンクリック */
-    void onSelectDirClicked();
+    /*! \brief Target directory フォルダ選択 */
+    void onProjectDirSelected();
 
 private:
     /*! \brief GTK+ Builder */
@@ -49,10 +49,8 @@ private:
     Gtk::Button* mpCreate;
     /*! \brief <i>&lt;Cancel&gt;</i> ボタン */
     Gtk::Button* mpCancel;
-    /*! \brief Target directory <i>&lt;Select...&gt;</i> ボタン */
-    Gtk::Button* mpSelected;
-    /*! \brief <i>&lt;Target directory&gt;</i> エントリー */
-    Gtk::Entry* mpTargetDir;
+    /*! \brief Project directory フォルダ選択ボタン */
+    Gtk::FileChooserButton* mpProjectDir;
 
 };
 

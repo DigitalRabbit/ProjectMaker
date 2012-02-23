@@ -41,7 +41,6 @@ ManifestParser::ManifestParser( const Glib::ustring aFilePath )
     Glib::ustring nodeName = node->get_name();
     // Recurse through child nodes:
     xmlpp::Node::NodeList list = node->get_children();
-    std::cout << nodeName << std::endl;
     for( xmlpp::Node::NodeList::iterator iter = list.begin(); iter != list.end() && ( nodeName != "manifest" ); ++iter )
     {
         node = *iter;
