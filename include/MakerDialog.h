@@ -41,6 +41,10 @@ protected:
     void onCancelClicked();
     /*! \brief Target directory フォルダ選択 */
     void onProjectDirSelected();
+    /*! \brief 標準出力コールバック */
+    bool onStandardOutout( Glib::IOCondition aCondition );
+    /*! \brief 標準エラーコールバック */
+    bool onStandardError( Glib::IOCondition aCondition );
 
 private:
     /*! \brief GTK+ Builder */
@@ -51,6 +55,17 @@ private:
     Gtk::Button* mpCancel;
     /*! \brief Project directory フォルダ選択ボタン */
     Gtk::FileChooserButton* mpProjectDir;
+
+    /*! \brief シェル起動時子プロセスID */
+    Glib::Pid mPid;
+
+    /*! \brief 子プロセス標準出力 IO チャンネル */
+    Glib::RefPtr<Glib::IOChannel> mrOutput;
+    /*! \brief 子プロセス標準エラー IO チャンネル */
+    Glib::RefPtr<Glib::IOChannel> mrError;
+
+    /*! \brief チャンネル1行読み込み */
+    bool readChannelLine( Glib::RefPtr<Glib::IOChannel> arChannel );
 
 };
 
